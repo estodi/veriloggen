@@ -29,6 +29,13 @@ def make_port(m, _type, *args, **kwargs):
     if 'initval' in kwargs and 'Reg' not in _type:
         del kwargs['initval']
 
+    if 'Tmp' in _type:
+        if 'name' in kwargs:
+            del kwargs['name']
+    elif 'prefix' in kwargs:
+        if not (_type == 'Probe' or 'copy_' in _type or 'connect_' in _type):
+            del kwargs['prefix']
+
     return getattr(m, _type)(*args, **kwargs)
 
 
